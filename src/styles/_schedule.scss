@@ -1,0 +1,386 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.schedule {
+  padding: 80px 0 60px;
+  background-color: $color-bg;
+
+  &__container {
+    @include container;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    color: $color-dark;
+    margin-bottom: 12px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: $color-dark;
+    margin-bottom: 48px;
+  }
+
+  &__form {
+    background-color: $color-white;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  &__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: rgba($color-gray-light, 0.2);
+    border-radius: 4px;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__empty-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $color-dark;
+    margin-bottom: 8px;
+  }
+
+  &__empty-text {
+    font-size: 14px;
+    color: $color-gray-dark;
+  }
+}
+
+// Form
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr auto;
+  gap: 24px;
+  align-items: end;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 14px;
+    color: $color-gray-dark;
+    font-weight: 400;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid $color-gray-light;
+    border-radius: 4px;
+    font-size: 14px;
+    color: $color-dark;
+    background-color: $color-white;
+    transition: border-color $transition-base;
+    height: 44px;
+    outline: none;
+
+    &::placeholder {
+      color: $color-gray;
+    }
+
+    &:hover {
+      border-color: $color-blue;
+    }
+
+    &:focus,
+    &:focus-visible {
+      border-color: $color-blue;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($color-blue, 0.15);
+    }
+  }
+
+  &__input--select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  &__select {
+    position: relative;
+
+    &-arrow {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 6px;
+      pointer-events: none;
+      color: $color-gray-dark;
+    }
+  }
+
+  &__submit {
+    @include button-reset;
+    background-color: $color-blue;
+    color: $color-white;
+    border: 1px solid $color-blue;
+    border-radius: 4px;
+    padding: 10px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    height: 44px;
+    min-width: 120px;
+    transition: all $transition-base;
+    text-transform: none;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-white;
+      color: $color-blue;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  &__reset {
+    @include button-reset;
+    background-color: transparent;
+    color: $color-gray-dark;
+    border: 1px solid $color-gray-light;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    height: 44px;
+    transition: all $transition-base;
+    text-transform: none;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-gray-light;
+      color: $color-dark;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Card
+.card {
+  background-color: $color-white;
+  border: 1px solid $color-gray-light;
+  border-radius: 4px;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow $transition-base, transform $transition-base, opacity $transition-base;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  &.is-hidden {
+    display: none;
+  }
+
+  &.is-fading {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__date {
+    font-size: 14px;
+    color: $color-dark;
+    font-weight: 500;
+  }
+
+  &__date-day {
+    color: $color-gray-dark;
+    font-weight: 400;
+  }
+
+  &__price {
+    font-size: 14px;
+    color: $color-dark;
+    font-weight: 500;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__detail {
+    font-size: 14px;
+    color: $color-dark;
+  }
+
+  &__detail--muted {
+    color: $color-gray-dark;
+  }
+
+  &__btn {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-orange;
+    color: $color-white;
+    border: 1px solid $color-orange;
+    border-radius: 4px;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all $transition-base;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-white;
+      color: $color-orange;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+}
+
+// Tablet
+@include tablet {
+  .schedule {
+    padding: 60px 0 40px;
+
+    &__title {
+      font-size: 26px;
+    }
+
+    &__subtitle {
+      font-size: 20px;
+      margin-bottom: 32px;
+    }
+
+    &__form {
+      padding: 24px;
+    }
+
+    &__list {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  .form {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    &__actions {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 8px;
+    }
+  }
+}
+
+// Mobile
+@include mobile {
+  .schedule {
+    padding: 48px 0 32px;
+
+    &__title {
+      font-size: 22px;
+    }
+
+    &__subtitle {
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+
+    &__form {
+      padding: 20px;
+    }
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+    gap: 14px;
+
+    &__actions {
+      display: flex;
+      gap: 8px;
+
+      .form__submit,
+      .form__reset {
+        flex: 1;
+      }
+    }
+  }
+
+  .card {
+    padding: 16px 18px;
+
+    &__top {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    &__price {
+      font-size: 13px;
+    }
+  }
+}

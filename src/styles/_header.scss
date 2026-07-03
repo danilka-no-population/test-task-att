@@ -1,0 +1,493 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: $color-header-bg;
+  transition: background-color $transition-base;
+  height: 64px;
+
+  &.header--scrolled {
+    background-color: $color-header-bg;
+  }
+
+  &__container {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 16px;
+    position: relative;
+  }
+
+  &__logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    transition: opacity $transition-base;
+
+    &:hover {
+      opacity: 0.85;
+      color: $color-white;
+    }
+  }
+
+  &__logo-img {
+    width: 50px;
+    height: 40px;
+    object-fit: contain;
+    mix-blend-mode: screen;
+  }
+
+  &__nav {
+    flex: 1 1 auto;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    flex-shrink: 0;
+  }
+
+  &__cta {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $color-orange;
+    color: $color-white;
+    background-color: transparent;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all $transition-base;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-orange;
+      color: $color-white;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  &__burger {
+    @include button-reset;
+    display: none;
+    width: 40px;
+    height: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1.5px solid $color-white;
+    border-radius: 4px;
+    transition: background-color $transition-base, border-color $transition-base;
+
+    &-line {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background-color: $color-white;
+      border-radius: 2px;
+      transition: all $transition-base;
+    }
+
+    &:hover {
+      background-color: rgba($color-white, 0.1);
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &.is-active {
+      .header__burger-line {
+        &:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+        &:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
+        }
+      }
+    }
+  }
+}
+
+// Nav
+.nav {
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__link {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $color-white;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 4px;
+    transition: color $transition-base;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-orange;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  &__arrow {
+    width: 10px;
+    height: 6px;
+    transition: transform $transition-base;
+    color: currentColor;
+  }
+
+  &__link--toggle {
+    &[aria-expanded='true'] {
+      .nav__arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    left: -16px;
+    margin-top: 8px;
+    background-color: $color-white;
+    border-radius: 4px;
+    padding: 12px 16px;
+    min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__dropdown-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: $color-blue;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    transition: color $transition-base;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-orange;
+    }
+  }
+
+  &__dropdown-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  &__dropdown-socials {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__dropdown-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: transform $transition-base, opacity $transition-base;
+
+    img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+  }
+}
+
+// Currency dropdown
+.currency {
+  position: relative;
+
+  &__toggle {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $color-orange;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 4px;
+    transition: opacity $transition-base;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+
+    &[aria-expanded='true'] {
+      .currency__arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__arrow {
+    width: 10px;
+    height: 6px;
+    transition: transform $transition-base;
+    stroke: currentColor;
+  }
+
+  &__list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background-color: $color-white;
+    border-radius: 4px;
+    min-width: 80px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    overflow: hidden;
+
+    &[hidden] {
+      display: none;
+    }
+
+    li + li {
+      border-top: 1px solid $color-gray-light;
+    }
+  }
+
+  &__option {
+    @include button-reset;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 14px;
+    color: $color-blue;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all $transition-base;
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-blue;
+      color: $color-white;
+    }
+
+    &.is-active {
+      background-color: $color-blue;
+      color: $color-white;
+    }
+  }
+}
+
+// Tablet
+@include tablet {
+  .header {
+    &__nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: $color-header-bg;
+      padding: 0 20px;
+      transform: translateY(-110%);
+      flex: none;
+      height: 224px;
+      overflow: hidden;
+      z-index: 99;
+      visibility: hidden;
+      transition: transform $transition-slow, height $transition-slow, visibility 0s linear $transition-slow;
+
+      &.is-open {
+        transform: translateY(0);
+        height: 224px;
+        padding: 16px 20px 24px;
+        visibility: visible;
+        overflow-y: auto;
+        transition: transform $transition-slow, height $transition-slow, visibility 0s linear 0s;
+      }
+
+      &.is-contacts-open {
+        height: 320px;
+        overflow-y: auto;
+      }
+    }
+
+    &__actions {
+      gap: 24px;
+
+      .header__currency {
+        display: inline-flex;
+      }
+    }
+
+    &__cta {
+      display: none;
+    }
+
+    &__burger {
+      display: flex;
+    }
+  }
+
+  .nav {
+    &__list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    &__item {
+      width: 100%;
+      border-bottom: 1px solid rgba($color-white, 0.12);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    &__link {
+      width: 100%;
+      justify-content: space-between;
+      padding: 14px 0;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    &__dropdown {
+      position: static;
+      margin-top: 0;
+      background-color: rgba($color-white, 0.05);
+      box-shadow: none;
+      border-radius: 0;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+
+      &[hidden] {
+        display: none;
+      }
+
+      &-link {
+        color: $color-white;
+        margin-bottom: 14px;
+        font-size: 13px;
+
+        &:hover,
+        &:focus-visible {
+          color: $color-orange;
+        }
+      }
+
+      &-icon {
+        width: 14px;
+        height: 14px;
+      }
+
+      &-socials {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      &-social {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: rgba($color-white, 0.1);
+        transition: all $transition-base;
+
+        img {
+          width: 22px;
+          height: 22px;
+          object-fit: contain;
+        }
+
+        &:hover {
+          background-color: $color-orange;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+// Mobile
+@include mobile {
+  .header {
+    &__logo-img {
+      width: 50px;
+      height: 40px;
+    }
+
+    &__actions {
+      gap: 20px;
+    }
+
+    &__burger {
+      width: 36px;
+      height: 36px;
+
+      &-line {
+        width: 18px;
+      }
+    }
+  }
+}
