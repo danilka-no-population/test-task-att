@@ -64,7 +64,6 @@
   }
 }
 
-// Form
 .form {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr auto;
@@ -200,7 +199,6 @@
   }
 }
 
-// Card
 .card {
   background-color: $color-white;
   border: 1px solid $color-gray-light;
@@ -301,7 +299,6 @@
   }
 }
 
-// Tablet
 @include tablet {
   .schedule {
     padding: 60px 0 40px;
@@ -337,7 +334,6 @@
   }
 }
 
-// Mobile
 @include mobile {
   .schedule {
     padding: 48px 0 32px;

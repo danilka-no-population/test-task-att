@@ -2,9 +2,6 @@ import flatpickr from 'flatpickr';
 import { Russian } from 'flatpickr/dist/l10n/ru.js';
 import '../styles/main.scss';
 
-// =============================================================================
-// DOM Ready
-// =============================================================================
 document.addEventListener('DOMContentLoaded', () => {
   initBurger();
   initSmoothScroll();
@@ -16,9 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
 });
 
-// =============================================================================
-// Burger menu
-// =============================================================================
 function initBurger() {
   const burger = document.getElementById('burgerBtn');
   const nav = document.getElementById('mainNav');
@@ -32,7 +26,6 @@ function initBurger() {
     nav.classList.remove('is-contacts-open');
     document.body.style.overflow = '';
 
-    // Also close any open dropdowns
     document.querySelectorAll('[data-dropdown]').forEach((t) => {
       t.setAttribute('aria-expanded', 'false');
     });
@@ -57,7 +50,6 @@ function initBurger() {
     }
   });
 
-  // Close menu when clicking nav links
   nav.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       if (window.innerWidth < 1024) {
@@ -66,7 +58,6 @@ function initBurger() {
     });
   });
 
-  // Close menu on resize to desktop
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
@@ -77,7 +68,6 @@ function initBurger() {
     }, 100);
   });
 
-  // Close on escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && nav.classList.contains('is-open')) {
       closeMenu();
@@ -85,9 +75,6 @@ function initBurger() {
   });
 }
 
-// =============================================================================
-// Smooth scroll
-// =============================================================================
 function initSmoothScroll() {
   const scrollLinks = document.querySelectorAll('[data-scroll]');
   scrollLinks.forEach((link) => {
@@ -107,9 +94,6 @@ function initSmoothScroll() {
   });
 }
 
-// =============================================================================
-// Dropdowns (currency, contacts)
-// =============================================================================
 function initDropdowns() {
   const dropdownToggles = document.querySelectorAll('[data-dropdown]');
   const mainNav = document.getElementById('mainNav');
@@ -138,7 +122,6 @@ function initDropdowns() {
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
       const isContactsToggle = toggle.getAttribute('data-dropdown') === 'contacts';
 
-      // Close all first
       dropdownToggles.forEach((t) => t.setAttribute('aria-expanded', 'false'));
       document.querySelectorAll('.nav__dropdown, .currency__list').forEach((d) => {
         d.hidden = true;
@@ -161,7 +144,6 @@ function initDropdowns() {
     });
   });
 
-  // Close on outside click
   document.addEventListener('click', (e) => {
     if (activeDropdown && !activeDropdown.contains(e.target)) {
       const toggle = e.target.closest('[data-dropdown]');
@@ -171,14 +153,12 @@ function initDropdowns() {
     }
   });
 
-  // Close on escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeAll();
     }
   });
 
-  // Currency options
   const currencyOptions = document.querySelectorAll('.currency__option');
   currencyOptions.forEach((option) => {
     option.addEventListener('click', () => {
@@ -192,9 +172,6 @@ function initDropdowns() {
   });
 }
 
-// =============================================================================
-// Slider
-// =============================================================================
 function initSlider() {
   const track = document.getElementById('sliderTrack');
   const prevBtn = document.getElementById('sliderPrev');
@@ -246,7 +223,6 @@ function initSlider() {
     }, 100);
   });
 
-  // Touch support
   let touchStartX = 0;
   let touchEndX = 0;
   const slider = document.getElementById('reviewsSlider');
@@ -281,9 +257,6 @@ function initSlider() {
   updateSlider();
 }
 
-// =============================================================================
-// Review "read more" toggle
-// =============================================================================
 function initReviewMore() {
   const moreLinks = document.querySelectorAll('[data-more]');
   moreLinks.forEach((link) => {
@@ -300,9 +273,6 @@ function initReviewMore() {
   });
 }
 
-// =============================================================================
-// Date pickers
-// =============================================================================
 let fpFrom = null;
 let fpTo = null;
 
@@ -334,9 +304,6 @@ function initDatePickers() {
   });
 }
 
-// =============================================================================
-// Form handling — actual filtering
-// =============================================================================
 function initForm() {
   const form = document.getElementById('searchForm');
   if (!form) return;
@@ -345,7 +312,6 @@ function initForm() {
   const emptyState = document.getElementById('scheduleEmpty');
   const resetBtn = document.getElementById('resetBtn');
 
-  // Helper: parse dd.mm.yyyy → Date (local time)
   const parseDate = (str) => {
     if (!str) return null;
     const [d, m, y] = str.split('.').map((n) => parseInt(n, 10));
@@ -353,7 +319,6 @@ function initForm() {
     return new Date(y, m - 1, d);
   };
 
-  // Helper: parse yyyy-mm-dd (data-date) → Date (local time)
   const parseIsoDate = (str) => {
     if (!str) return null;
     const [y, m, d] = str.split('-').map((n) => parseInt(n, 10));
@@ -361,7 +326,6 @@ function initForm() {
     return new Date(y, m - 1, d);
   };
 
-  // Helper: format Date → yyyy-mm-dd (matches data-date format)
   const toIsoDate = (date) => {
     if (!date) return '';
     const y = date.getFullYear();
@@ -370,7 +334,6 @@ function initForm() {
     return `${y}-${m}-${d}`;
   };
 
-  // Update reset button enabled state
   const updateResetState = () => {
     if (!resetBtn) return;
     const dateFrom = document.getElementById('dateFrom').value;
@@ -381,7 +344,6 @@ function initForm() {
     resetBtn.disabled = !isFiltered;
   };
 
-  // Apply filter to cards
   const applyFilter = () => {
     const dateFromStr = document.getElementById('dateFrom').value;
     const dateToStr = document.getElementById('dateTo').value;
@@ -400,7 +362,6 @@ function initForm() {
 
       let show = true;
 
-      // Date range filter
       if (dateFrom || dateTo) {
         const cardDate = parseIsoDate(cardDateStr);
         if (dateFrom && cardDate < dateFrom) {
@@ -411,7 +372,6 @@ function initForm() {
         }
       }
 
-      // Capacity filter — only show if there are enough seats for the requested guests
       if (show && totalGuests > 0) {
         if (cardSeats === 0) {
           show = false;
@@ -421,7 +381,6 @@ function initForm() {
         }
       }
 
-      // Animate
       if (show) {
         card.classList.remove('is-hidden', 'is-fading');
         visibleCount++;
@@ -433,13 +392,11 @@ function initForm() {
       }
     });
 
-    // Toggle empty state
     if (emptyState) {
       emptyState.hidden = visibleCount > 0;
     }
   };
 
-  // Submit handler
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     applyFilter();
@@ -447,7 +404,6 @@ function initForm() {
     showSearchFeedback();
   });
 
-  // Reset handler
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       if (fpFrom) fpFrom.clear();
@@ -455,7 +411,6 @@ function initForm() {
       document.getElementById('adults').value = '1';
       document.getElementById('children').value = '0';
 
-      // Show all cards
       cards.forEach((card) => {
         card.classList.remove('is-hidden', 'is-fading');
       });
@@ -467,7 +422,6 @@ function initForm() {
     });
   }
 
-  // Real-time updates for selects
   document.getElementById('adults').addEventListener('change', () => {
     updateResetState();
     if (form.querySelector('input[value]:not([readonly])')) {
@@ -478,7 +432,6 @@ function initForm() {
     updateResetState();
   });
 
-  // Update reset state on date changes
   if (fpFrom) {
     fpFrom.config.onChange.push(() => updateResetState());
   }
@@ -519,9 +472,6 @@ function showSearchFeedback(message = 'Поиск выполнен') {
   }, 2200);
 }
 
-// =============================================================================
-// Header scroll effect
-// =============================================================================
 function initHeaderScroll() {
   const header = document.getElementById('header');
   if (!header) return;

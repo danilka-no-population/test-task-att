@@ -128,7 +128,6 @@
   }
 }
 
-// Nav
 .nav {
   &__list {
     display: flex;
@@ -248,7 +247,6 @@
   }
 }
 
-// Currency dropdown
 .currency {
   position: relative;
 
@@ -334,7 +332,6 @@
   }
 }
 
-// Tablet
 @include tablet {
   .header {
     &__nav {
@@ -469,7 +466,6 @@
   }
 }
 
-// Mobile
 @include mobile {
   .header {
     &__logo-img {

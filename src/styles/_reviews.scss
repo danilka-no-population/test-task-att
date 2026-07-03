@@ -53,7 +53,6 @@
   }
 }
 
-// Review
 .review {
   background-color: $color-white;
   border: 1px solid $color-gray-light;
@@ -165,7 +164,6 @@
   }
 }
 
-// Slider controls
 .slider-controls {
   &__btn {
     @include button-reset;
@@ -208,7 +206,6 @@
   }
 }
 
-// Tablet
 @include tablet {
   .reviews {
     padding: 40px 0 80px;
@@ -226,7 +223,6 @@
   }
 }
 
-// Mobile
 @include mobile {
   .reviews {
     padding: 32px 0 60px;

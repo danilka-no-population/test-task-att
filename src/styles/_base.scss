@@ -82,7 +82,6 @@ ul, ol {
   @include container;
 }
 
-// Buttons
 .btn {
   display: inline-flex;
   align-items: center;
@@ -154,7 +153,6 @@ ul, ol {
   }
 }
 
-// Animations
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -166,7 +164,6 @@ ul, ol {
   }
 }
 
-// Flatpickr theme overrides
 .flatpickr-calendar {
   font-family: $font-family;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
